@@ -1,25 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.laboratorio.calidad.codigo;
 
 /**
- * Clase principal que ejecuta casos de prueba para el registro de usuarios.
+ * Punto de entrada de la aplicación.
  */
-public class Main {
+public final class Main {
 
-    public static void main(String[] args) {
+    /**
+     * Constructor privado para evitar la instanciación.
+     */
+    private Main() {
+        // Intencionadamente vacío.
+    }
+
+    /**
+     * Método principal de la aplicación.
+     *
+     * @param args argumentos de la línea de comandos
+     */
+    public static void main(final String[] args) {
         UserRegistrationService service = new UserRegistrationService();
 
-        // Casos de prueba simples
-        service.registerUser("juan", "123", "juan@correo"); // Contraseña muy corta
+        // Casos de prueba simples.
+        service.registerUser("juan", "123", "juan@correo");
         System.out.println(service.getLastErrorMessage());
 
-        service.registerUser(null, "12345678", "correo-sin-arroba"); // username null
+        service.registerUser(null, "12345678", "correo-sin-arroba");
         System.out.println(service.getLastErrorMessage());
 
-        service.registerUser("error", "12345678", "error@correo.com"); // fuerza excepción
+        service.registerUser("error", "12345678",
+                "error@correo.com");
         System.out.println(service.getLastErrorMessage());
     }
 }

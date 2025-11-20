@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.laboratorio.calidad.codigo;
 
 import java.util.ArrayList;
@@ -13,26 +9,44 @@ import java.util.regex.Pattern;
  */
 public class UserRegistrationService {
 
+    /**
+     * Último mensaje de error generado por el servicio.
+     */
     private String lastErrorMessage = "";
+
+    /**
+     * Lista de nombres de usuario registrados.
+     */
     private final List<String> users = new ArrayList<>();
+
+    /**
+     * Longitud mínima permitida para la contraseña.
+     */
     private static final int MIN_PASSWORD_LENGTH = 8;
 
+    /**
+     * Crea una nueva instancia del servicio de registro.
+     */
     public UserRegistrationService() {
         System.out.println("Servicio de registro iniciado correctamente.");
     }
 
     /**
      * Registra un nuevo usuario.
-     * 
+     *
      * @param username nombre de usuario
      * @param password contraseña del usuario
-     * @param email    correo electrónico
-     * @return true si el usuario se registra correctamente, false en caso contrario
+     * @param email    correo electrónico del usuario
+     * @return {@code true} si el usuario se registra correctamente,
+     *         {@code false} en caso contrario
      */
-    public boolean registerUser(String username, String password, String email) {
+    public boolean registerUser(final String username,
+                                final String password,
+                                final String email) {
 
         if (username == null || username.trim().isEmpty()) {
-            lastErrorMessage = "El nombre de usuario no puede estar vacío o ser nulo.";
+            lastErrorMessage =
+                    "El nombre de usuario no puede estar vacío o ser nulo.";
             return false;
         }
 
@@ -42,7 +56,9 @@ public class UserRegistrationService {
         }
 
         if (password.length() < MIN_PASSWORD_LENGTH) {
-            lastErrorMessage = "La contraseña es muy corta. Debe tener al menos " + MIN_PASSWORD_LENGTH + " caracteres.";
+            lastErrorMessage =
+                    "La contraseña es muy corta. Debe tener al menos "
+                    + MIN_PASSWORD_LENGTH + " caracteres.";
             return false;
         }
 
@@ -62,7 +78,8 @@ public class UserRegistrationService {
             lastErrorMessage = e.getMessage();
             return false;
         } catch (Exception e) {
-            lastErrorMessage = "Error al guardar el usuario: " + e.getMessage();
+            lastErrorMessage =
+                    "Error al guardar el usuario: " + e.getMessage();
             return false;
         }
 
@@ -70,7 +87,17 @@ public class UserRegistrationService {
         return true;
     }
 
-    private void saveUser(String username, String password, String email) throws Exception {
+    /**
+     * Guarda un nuevo usuario en la lista interna.
+     *
+     * @param username nombre de usuario
+     * @param password contraseña del usuario
+     * @param email    correo electrónico del usuario
+     * @throws Exception si ocurre un problema al guardar el usuario
+     */
+    private void saveUser(final String username,
+                          final String password,
+                          final String email) throws Exception {
         if ("error".equals(username)) {
             throw new IllegalArgumentException("Nombre de usuario no permitido.");
         }
@@ -79,23 +106,34 @@ public class UserRegistrationService {
 
     /**
      * Verifica si el correo cumple con un formato básico válido.
+     *
+     * @param email correo electrónico a validar
+     * @return {@code true} si el correo tiene un formato válido,
+     *         {@code false} en caso contrario
      */
-    private boolean isValidEmail(String email) {
+    private boolean isValidEmail(final String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        return Pattern.compile(emailRegex).matcher(email).matches();
+        return Pattern.compile(emailRegex)
+                .matcher(email)
+                .matches();
     }
 
     /**
      * Devuelve el último mensaje de error registrado.
+     *
+     * @return último mensaje de error
      */
     public String getLastErrorMessage() {
         return lastErrorMessage;
     }
 
     /**
-     * Devuelve la longitud de una cadena, o -1 si es nula.
+     * Devuelve la longitud de una cadena.
+     *
+     * @param input cadena de texto, puede ser {@code null}
+     * @return longitud de la cadena o {@code -1} si es {@code null}
      */
-    public int getStringLength(String input) {
+    public int getStringLength(final String input) {
         if (input == null) {
             return -1;
         }
