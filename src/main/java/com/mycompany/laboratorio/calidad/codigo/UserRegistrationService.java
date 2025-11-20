@@ -74,12 +74,12 @@ public class UserRegistrationService {
 
         try {
             saveUser(username, password, email);
-        } catch (IllegalArgumentException e) {
-            lastErrorMessage = e.getMessage();
+        } catch (IllegalArgumentException ex) {
+            lastErrorMessage = ex.getMessage();
             return false;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             lastErrorMessage =
-                    "Error al guardar el usuario: " + e.getMessage();
+                    "Error al guardar el usuario: " + ex.getMessage();
             return false;
         }
 
@@ -98,8 +98,10 @@ public class UserRegistrationService {
     private void saveUser(final String username,
                           final String password,
                           final String email) throws Exception {
+
         if ("error".equals(username)) {
-            throw new IllegalArgumentException("Nombre de usuario no permitido.");
+            throw new IllegalArgumentException(
+                    "Nombre de usuario no permitido.");
         }
         users.add(username);
     }
@@ -113,7 +115,8 @@ public class UserRegistrationService {
      */
     private boolean isValidEmail(final String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        return Pattern.compile(emailRegex)
+        return Pattern
+                .compile(emailRegex)
                 .matcher(email)
                 .matches();
     }
